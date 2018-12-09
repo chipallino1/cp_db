@@ -5,15 +5,23 @@ drop table routes;
 drop table points;
 drop table orders;
 drop table passwords;
+drop table trains;
 
+drop sequence clients_id;
+drop sequence tickets_id;
+drop sequence routes_id;
+drop sequence points_id;
+drop sequence orders_id;
+drop sequence passwords_id;
+drop table trains_id;
 
 create table clients(
   id int not null primary key,
-  login varchar2(45) not null,
+  login varchar2(45) UNIQUE not null,
   firstname varchar2(45) not null,
   lastname varchar2(45) not null,
-  phone varchar2(45) not null,
-  email varchar2(45) not null,
+  phone varchar2(45) unique not null,
+  email varchar2(45) unique not null,
   type varchar2(45) not null,
   id_password int not null
 ) tablespace simple_user_rw_ts;
@@ -97,7 +105,7 @@ create sequence passwords_id
     order;
 create table trains(
   id int not null primary key,
-  name varchar2(45) not null,
+  name varchar2(45) unique not null,
   numeration_from varchar2(45),
   count_carriages int not null,
   count_places_carriage int not null,
