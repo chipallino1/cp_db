@@ -13,7 +13,7 @@ create or replace procedure encode(
                             DBMS_CRYPTO.ENCRYPT_AES256
                           + DBMS_CRYPTO.CHAIN_CBC
                           + DBMS_CRYPTO.PAD_PKCS5;
-     DBMS_OUTPUT.PUT_LINE ( 'Original string: ' || password_string);
+     --DBMS_OUTPUT.PUT_LINE ( 'Original string: ' || password_string);
      key_bytes_raw := DBMS_CRYPTO.RANDOMBYTES (num_key_bytes);
      encrypted_raw := DBMS_CRYPTO.ENCRYPT
       (
@@ -25,7 +25,7 @@ create or replace procedure encode(
         values(passwords_id.nextval,encrypted_raw,key_bytes_raw); 
       commit;
       output_string := UTL_I18N.RAW_TO_CHAR(encrypted_raw, 'AL32UTF8');
-      DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || output_string);
+      --DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || output_string);
  
     exception
         when others then dbms_output.put_line(sqlerrm);
@@ -50,7 +50,7 @@ create or replace procedure decode(
                           + DBMS_CRYPTO.CHAIN_CBC
                           + DBMS_CRYPTO.PAD_PKCS5;
     
-     DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || encoded);
+     --DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || encoded);
       decrypted_raw := DBMS_CRYPTO.DECRYPT
       (
          src => encoded,
@@ -58,7 +58,7 @@ create or replace procedure decode(
          key => random
       );
       output_string := UTL_I18N.RAW_TO_CHAR (decrypted_raw, 'AL32UTF8');
-      DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || output_string);
+      --DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || output_string);
       output_string := UTL_I18N.RAW_TO_CHAR(encrypted_raw, 'AL32UTF8');
  
     exception
