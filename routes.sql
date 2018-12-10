@@ -66,6 +66,7 @@ create or replace procedure delete_route(
     begin
         delete routes where id=id_prm;
         commit;
+        dbms_output.put_line('Route deleted!');
     exception
         when others then dbms_output.put_line(sqlerrm);
                          rollback;
@@ -92,3 +93,5 @@ end loop;
 end;
         
 exec get_routes_by_all(170121,170124,668660,NULL,NULL);
+exec delete_route(145000);
+select * from routes where id=145000;
