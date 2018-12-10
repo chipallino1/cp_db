@@ -175,4 +175,4 @@ end loop;
 end;
 
 
-select count(*) from clients;
+select * from clients;
