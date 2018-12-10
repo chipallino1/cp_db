@@ -75,8 +75,39 @@ create or replace procedure get_tickets_by_all(
                          rollback;
 end get_tickets_by_all;
 
+create or replace procedure delete_ticket(
+        id_prm int
+    )
+    is
+    begin
+        delete tickets where id=id_prm;
+        commit;
+        dbms_output.put_line('Ticket deleted!');
+    exception
+        when others then dbms_output.put_line(sqlerrm);
+                         rollback;
+end delete_ticket;
 
 
+
+declare
+i int :=0;
+begin
+loop
+exit when i=100110;
+if mod(i,2)=0 then 
+create_ticket(i+1,i,i+2,i+3,'BEST');
+end if;
+if mod(i,3)=0 then create_ticket(i,i+1,i+1,i+4,'WORST');
+end if;
+i:=i+1;
+end loop;
+end;
+
+exec get_tickets_by_all(51813,NULL,NULL,NULL,NULL);
+
+exec delete_ticket(60605);
+select count(*) from tickets;
 
 select * from tickets inner join (routes inner join points on(routes.id_from=points.id)
         inner join points on(routes.id_to=points.id)) on(routes.id=tickets.id_route)

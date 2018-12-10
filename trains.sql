@@ -114,10 +114,19 @@ create or replace procedure add_count_carriages(
             when others then dbms_output.put_line(sqlerrm);
                         rollback;
 end add_count_carriages;
-select * from trains where id=145030
 
 
-select * from trains where 
-exec get_trains_by_all('Suka','he1ad',22,'','');
-exec update_train('Train 2','Suka','head',23,23,23);
-exec delete_train('Train 22');
+declare
+i int :=0;
+begin
+loop
+exit when i=100110;
+if mod(i,2)=0 then 
+create_train(i||'T','end',i+2,i+3,i);
+end if;
+if mod(i,3)=0 then create_train(i||'V','head',i,i+1,i+2);
+end if;
+i:=i+1;
+end loop;
+end;
+select * from trains;
