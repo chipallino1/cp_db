@@ -48,17 +48,31 @@ create or replace procedure delete_point(
                          rollback;
 end delete_point;
     
+create or replace function get_curr_point_id(
+        country_prm varchar2,
+        region_prm varchar2,
+        city_prm varchar2
+        ) return number
+        is 
+        id_return number(10);
+        begin
+        select id into id_return from points where country=country_prm and region=region_prm and city=city_prm;
+        return id_return;
+end get_curr_point_id;
 
 declare
-i int :=0;
+i int :=99904;
 begin
 loop
-exit when i=100000;
-exec create_point('Belarus 2','Minsk2','Minsk2');
-exec delete_point('Belarus 2','Minsk2','Minsk2');
-exec get_points_by_all('Belarus 2',NULL,NULL);
+exit when i=100110;
+if mod(i,2)=0 then 
+create_point('Belarus '||i,'Minsk '||i,'Zhodino '||i);
+end if;
+if mod(i,3)=0 then create_point('Belarus '||i,'Grodno '||i,'Lida '||i);
+end if;
 i:=i+1;
 end loop;
 end;
- 
+select * from points;
+ delete points;
 
