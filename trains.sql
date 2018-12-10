@@ -88,6 +88,18 @@ create or replace procedure update_train(
                          rollback;
 end update_train;
 
+create or replace procedure delete_train(
+            name_prm in varchar2
+        )
+        is
+        begin
+        delete trains where name=name_prm;
+        commit;
+        dbms_output.put_line('Train deleted!');
+        exception
+            when others then dbms_output.put_line(sqlerrm);
+                        rollback;
+end delete_train;
 
 
 declare
@@ -103,5 +115,6 @@ end;
 select * from trains where id=145030
 
 select * from trains where 
-exec get_trains_by_all('Suka1','he1ad',23,'','');
+exec get_trains_by_all('Suka','he1ad',22,'','');
 exec update_train('Train 2','Suka','head',23,23,23);
+exec delete_train('Train 22');
