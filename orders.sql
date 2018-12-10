@@ -100,6 +100,33 @@ create or replace procedure get_orders_by_all(
                          rollback;
 end get_orders_by_all;
 
+create or replace procedure make_payment(
+        id_prm in int
+    )
+   is
+    begin
+    update orders set date_payment=TO_DATE(sysdate,'YYYY-MM-DD HH24:MI') where id=id_prm;
+    commit;
+    dbms_output.put_line('Made payment');
+    exception
+        when others then dbms_output.put_line(sqlerrm);
+                         rollback;
+end make_payment;
+
+create or replace procedure delete_order(
+        id_prm in int
+    )
+   is
+    begin
+    delete orders where id=id_prm;
+    commit;
+    dbms_output.put_line('Order deleted');
+    exception
+        when others then dbms_output.put_line(sqlerrm);
+                         rollback;
+end delete_order;
+
+
 
 declare
 i int :=0;
@@ -119,5 +146,6 @@ end loop;
 end;
 
 select * from orders;
-
+exec make_payment(86);
+exec delete_order(86);
 exec get_orders_by_all(null,null,null,'24.03.18','19.11.18');
