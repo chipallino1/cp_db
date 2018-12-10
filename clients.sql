@@ -158,3 +158,21 @@ create or replace procedure verify_user(
         when others then dbms_output.put_line(sqlerrm);
                          rollback;
 end verify_user;
+
+
+declare
+i int :=160000;
+begin
+loop
+exit when i=170110;
+if mod(i,2)=0 then 
+create_simple_user('chip '||i,'Egor '|| i,'Skorupich '||i,'91272'||i,'egor'||i||'@mail.ru','SIMPLE_USER','egor'||i);
+end if;
+if mod(i,3)=0 then create_simple_user('makina '||i,'Misha '|| i,'Kaminskiy '||i,'1272'||i,'mk'||i||'@mail.ru','SIMPLE_USER','lexa'||i);
+end if;
+i:=i+1;
+end loop;
+end;
+
+
+select count(*) from clients;
