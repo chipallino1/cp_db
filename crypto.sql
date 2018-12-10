@@ -1,4 +1,4 @@
-create or replace procedure encode(
+create or replace procedure encode_crypto(
         password_string in varchar2
     )
    is
@@ -30,12 +30,13 @@ create or replace procedure encode(
     exception
         when others then dbms_output.put_line(sqlerrm);
                          rollback;
-end encode;
+end encode_crypto;
 
 
-create or replace procedure decode(
+create or replace procedure decode_crypto(
         encoded in raw,
-        random in raw
+        random in raw,
+        output out varchar2
     )
    is
     output_string      VARCHAR2 (200);
@@ -59,10 +60,9 @@ create or replace procedure decode(
       );
       output_string := UTL_I18N.RAW_TO_CHAR (decrypted_raw, 'AL32UTF8');
       --DBMS_OUTPUT.PUT_LINE ( 'Encrypted string: ' || output_string);
-      output_string := UTL_I18N.RAW_TO_CHAR(encrypted_raw, 'AL32UTF8');
- 
+      output:=output_string;
     exception
         when others then dbms_output.put_line(sqlerrm);
                          rollback;
-end decode;
+end decode_crypto;
 
