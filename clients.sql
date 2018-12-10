@@ -158,19 +158,3 @@ create or replace procedure verify_user(
         when others then dbms_output.put_line(sqlerrm);
                          rollback;
 end verify_user;
-
-
-declare
-curr_row clients%rowtype;
-begin
-    select * from clients;
-    dbms_output.put_line(curr_row.email);
-    exec decode_crypto();
-    exec get_clients_by_all('mishakosy',NULL,NULL,NULL,NULL,NULL);
-   -- exec create_simple_user('mishakosy','misha','kosy','89764565','misha@mail.ru','kosy','SIMPLE_USER');
-    --exec update_current_client_by_email('misha@mail.ru','egorka','kot','kotovich','1','lexa@mail.ru','SIMPLE_USER');
-    exec create_simple_user('ilya','misha','kosy','893764565','ilya@mail.ru','SIMPLE_USER','ilya');
-    exec delete_current_client('email');
-    exec make_simple_user_as_admin('misha@mail.ru');
-    exec verify_user('ilya@mail.ru','ilyah');
-end;
