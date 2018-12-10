@@ -101,18 +101,21 @@ create or replace procedure delete_train(
                         rollback;
 end delete_train;
 
-
-declare
-i number(10):=0;
-begin
-    loop
-    exit when i=100000;
-        create_train('Train '||i,'end',i,i,i);
-        i:=i+1;
-    end loop;
-end;
-
+create or replace procedure add_count_carriages(
+    name_prm in varchar2,
+    add_count in int
+        )
+        is
+        begin
+        update trains set count_carriages=count_carriages+add_count where name=name_prm;
+        commit;
+        dbms_output.put_line('Train updated!');
+        exception
+            when others then dbms_output.put_line(sqlerrm);
+                        rollback;
+end add_count_carriages;
 select * from trains where id=145030
+
 
 select * from trains where 
 exec get_trains_by_all('Suka','he1ad',22,'','');
